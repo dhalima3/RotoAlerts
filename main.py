@@ -1,5 +1,7 @@
 import requests
 import bs4
+import smtplib
+from secrets import *
 
 
 def main():
@@ -27,6 +29,22 @@ def main():
         final.append(impacts[i])
         final.append("DATE:")
         final.append(dates[i])
+    printOutput(final)
+
+
+def printOutput(final):
+    for entry in final:
+        print entry
+
+
+def send_email(updates):
+    server = smtplib.SMTP(smtp_server, smtp_port)
+    server.ehlo()
+    server.starttls()
+    server.login(email_username, email_password)
+    server.sendmail(email_username, destination_email, updates)
+    server.quit()
 
 
 main()
+# send_email()
