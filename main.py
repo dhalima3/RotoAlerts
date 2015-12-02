@@ -28,7 +28,7 @@ def main():
     final = format_email(updates)
 
     print final
-    if not final:
+    if final:
         send_email(final)
 
 
