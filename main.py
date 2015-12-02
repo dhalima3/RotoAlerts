@@ -23,8 +23,11 @@ def main():
 
     # roto stuff on the first entry that we don't need
     impacts.pop(0)
-    final = get_updates(reports, impacts, dates)
-    printOutput(final)
+    updates = get_updates(reports, impacts, dates)
+    final = format_updates(updates)
+
+    send_email(final)
+    #printOutput(final)
 
 
 def get_updates(reports, impacts, dates):
@@ -35,12 +38,23 @@ def get_updates(reports, impacts, dates):
         time_split = map(int, date_split[3].split(":"))
         am_or_pm = date_split[4]
         hour = time_split[0] + 12 if (am_or_pm == "PM") else time_split[0]
-        minute = time_split[1]
-        if (current_time.hour - hour == 0) and (current_time.minute - minute <= 7):
+        # minute = time_split[1]
+        if (current_time.hour - hour == 2):
+            # and (current_time.minute - minute <= 7):
             updates.append("REPORT: " + reports[i])
             updates.append("IMPACT: " + impacts[i])
             updates.append("DATE: " + dates[i])
     return updates
+
+
+def format_updates(updates):
+    final = ""
+    updates = map(str, updates)
+    for i in range(len(updates)):
+        final += updates[i] + '\n'
+        if ((i+1) % 3 == 0):
+            final += '\n'
+    return final
 
 
 def printOutput(final):
@@ -58,4 +72,3 @@ def send_email(updates):
 
 
 main()
-# send_email()
