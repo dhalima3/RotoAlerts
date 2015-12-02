@@ -2,6 +2,7 @@ import requests
 import bs4
 import smtplib
 import datetime
+from twilio.rest import TwilioRestClient
 from secrets import *
 
 
@@ -27,7 +28,7 @@ def main():
     final = format_email(updates)
 
     print final
-    if final is not empty:
+    if not final:
         send_email(final)
 
 
@@ -48,7 +49,7 @@ def get_updates(reports, impacts, dates):
 
 
 def format_email(updates):
-    finall = ""
+    final = ""
     #final = "From: " + email_username + "<" +  email_username + ">\n"
     #final += "To: To Person <" + destination_email + ">\n"
     #final += "Subject: Fantasy Football Alert\n"
@@ -67,6 +68,15 @@ def send_email(updates):
     server.login(email_username, email_password)
     server.sendmail(email_username, destination_email, updates)
     server.quit()
+
+
+def send_text_alert(updates):
+    account_sid = "ACXXXXXXXXXXXXXXXXX"
+    auth_token = "YYYYYYYYYYYYYYYYYY"
+    client = TwilioRestClient(account_sid, auth_token)
+
+    message = client.messages.create(to="+12316851234", from_="+15555555555",
+                                        body="Hello there!")
 
 
 main()
