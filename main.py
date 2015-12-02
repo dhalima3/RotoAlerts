@@ -24,10 +24,11 @@ def main():
     # roto stuff on the first entry that we don't need
     impacts.pop(0)
     updates = get_updates(reports, impacts, dates)
-    final = format_updates(updates)
+    final = format_email(updates)
 
-    send_email(final)
-    #printOutput(final)
+    print final
+    if final is not empty:
+        send_email(final)
 
 
 def get_updates(reports, impacts, dates):
@@ -39,27 +40,24 @@ def get_updates(reports, impacts, dates):
         am_or_pm = date_split[4]
         hour = time_split[0] + 12 if (am_or_pm == "PM") else time_split[0]
         # minute = time_split[1]
-        if (current_time.hour - hour == 2):
-            # and (current_time.minute - minute <= 7):
+        if (current_time.hour - hour == 0) and (current_time.minute - minute <= 7):
             updates.append("REPORT: " + reports[i])
             updates.append("IMPACT: " + impacts[i])
             updates.append("DATE: " + dates[i])
     return updates
 
 
-def format_updates(updates):
-    final = ""
+def format_email(updates):
+    finall = ""
+    #final = "From: " + email_username + "<" +  email_username + ">\n"
+    #final += "To: To Person <" + destination_email + ">\n"
+    #final += "Subject: Fantasy Football Alert\n"
     updates = map(str, updates)
     for i in range(len(updates)):
         final += updates[i] + '\n'
         if ((i+1) % 3 == 0):
-            final += '\n'
+            final += '====================================================\n'
     return final
-
-
-def printOutput(final):
-    for entry in final:
-        print entry
 
 
 def send_email(updates):
