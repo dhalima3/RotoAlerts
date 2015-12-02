@@ -79,8 +79,6 @@ def send_email(updates):
 
 
 def send_text_alert(updates):
-    account_sid = "ACXXXXXXXXXXXXXXXXX"
-    auth_token = "YYYYYYYYYYYYYYYYYY"
     client = TwilioRestClient(account_sid, auth_token)
 
     message = client.messages.create(to="+12316851234", from_="+15555555555",
