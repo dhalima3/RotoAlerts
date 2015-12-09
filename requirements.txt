@@ -1,0 +1,3 @@
+Requests==2.6.0
+Beautifulsoup4==4.4.1
+Twilio==4.9.1
