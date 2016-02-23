@@ -1,2 +1,2 @@
 # RotoAlerts
-Get instant alerts from Roto World for fantasy football either through text (Twilio) or email. 
+Get alerts from Roto World for fantasy football either through text (Twilio) or email. 
